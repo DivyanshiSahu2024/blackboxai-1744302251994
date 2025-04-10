@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Web3 DApp</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Web3.js -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-cube text-blue-600 text-2xl"></i>
+                        <span class="ml-2 text-xl font-bold text-gray-800">Web3 DApp</span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="index.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Home
+                        </a>
+                        <a href="dashboard.html" class="border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="about.html" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            About
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button id="connectWallet" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <i class="fas fa-wallet mr-2"></i>
+                        Connect Wallet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Wallet Info -->
+        <div class="px-4 py-6 sm:px-0">
+            <div class="border-4 border-dashed border-gray-200 rounded-lg p-4">
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Wallet Information
+                        </h3>
+                        <div class="mt-5">
+                            <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                                <div class="px-4 py-5 bg-gray-50 shadow rounded-lg overflow-hidden sm:p-6">
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        Connected Address
+                                    </dt>
+                                    <dd id="walletAddress" class="mt-1 text-sm text-gray-900">
+                                        Not Connected
+                                    </dd>
+                                </div>
+                                <div class="px-4 py-5 bg-gray-50 shadow rounded-lg overflow-hidden sm:p-6">
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        ETH Balance
+                                    </dt>
+                                    <dd id="ethBalance" class="mt-1 text-sm text-gray-900">
+                                        0 ETH
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transaction Section -->
+        <div class="mt-8 px-4 sm:px-0">
+            <div class="border-4 border-dashed border-gray-200 rounded-lg p-4">
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Send Transaction
+                        </h3>
+                        <div class="mt-5">
+                            <form id="sendTransaction" class="space-y-6">
+                                <div>
+                                    <label for="recipientAddress" class="block text-sm font-medium text-gray-700">
+                                        Recipient Address
+                                    </label>
+                                    <div class="mt-1">
+                                        <input type="text" name="recipientAddress" id="recipientAddress" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="0x...">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="amount" class="block text-sm font-medium text-gray-700">
+                                        Amount (ETH)
+                                    </label>
+                                    <div class="mt-1">
+                                        <input type="number" step="0.0001" name="amount" id="amount" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="0.0">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        Send Transaction
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network Status -->
+        <div class="mt-8 px-4 sm:px-0">
+            <div class="border-4 border-dashed border-gray-200 rounded-lg p-4">
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Network Status
+                        </h3>
+                        <div class="mt-5">
+                            <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                                <div class="px-4 py-5 bg-gray-50 shadow rounded-lg overflow-hidden sm:p-6">
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        Current Network
+                                    </dt>
+                                    <dd id="networkName" class="mt-1 text-sm text-gray-900">
+                                        Not Connected
+                                    </dd>
+                                </div>
+                                <div class="px-4 py-5 bg-gray-50 shadow rounded-lg overflow-hidden sm:p-6">
+                                    <dt class="text-sm font-medium text-gray-500 truncate">
+                                        Connection Status
+                                    </dt>
+                                    <dd id="connectionStatus" class="mt-1 text-sm text-gray-900">
+                                        Disconnected
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 mt-12">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-base text-gray-400">
+                    &copy; 2024 Web3 DApp. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="app.js"></script>
+</body>
+</html>
